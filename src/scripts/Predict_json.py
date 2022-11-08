@@ -28,10 +28,3 @@ if __name__ == '__main__':
 # path_data = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Datasets/camara_comercio_NER/gt/3cb4fa20-89cb-11e8-a485-d149999fe64b-0.json "
 # output_dir = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Software NER/document_tagged.json"
 # sentence = use_model('CCC', path_data, output_dir)
-#%%
-
-def sum(a,b):
-    c = a+b
-    return c
-a=sum(3,4)
-type(a)

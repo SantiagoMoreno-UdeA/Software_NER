@@ -130,10 +130,10 @@ def use_model(name, path_data, output_dir):
         return 9 
     
     try:
-        tagger = SequenceTagger.load(path_model+'/best-model_F.pt')
+        tagger = SequenceTagger.load(path_model+'/best-model.pt')
     except:
         try:
-            tagger = SequenceTagger.load(path_model+'/final-model_F.pt')
+            tagger = SequenceTagger.load(path_model+'/final-model.pt')
         except: 
             print('Invalid model')
             return 0
@@ -144,7 +144,10 @@ def use_model(name, path_data, output_dir):
     except: 
         print('Can\'t open the input file')
         return 2
-    assert (len(data) > 0, f"length of document greater than 0 expected, got: {len(data)}")
+    
+    if len(data) <= 0:
+        print(f"length of document greater than 0 expected, got: {len(data)}")
+        return 2
     
     try:
         sentences=data['sentences']
@@ -193,17 +196,21 @@ def json_to_txt(path_data_documents):
         data=path_data_documents+'/'+doc
         df = pd.read_json(data, orient ='index')[0]
         try:
-            sentences=df['sentences']
+            sentences = df['sentences']
             t = sentences[0]['text']
+            t = sentences[0]['id']
             t = sentences[0]['tokens']
             j = t[0]['text']
             j = t[0]['begin']
             j = t[0]['end']
-            tags=df['mentions']
-            tg = tags[0]['id']
-            tg = tags[0]['begin']
-            tg = tags[0]['end']
-            tg = tags[0]['type']
+            tags = df['mentions']
+            if tags:
+                
+                tg = tags[0]['id']
+                tg = tags[0]['begin']
+                tg = tags[0]['end']
+                tg = tags[0]['type']
+                print('Final')
         except: 
             print('Invalid JSON input format in document {}'.format(doc))
             return 3
@@ -292,17 +299,4 @@ def json_to_txt(path_data_documents):
             
 
                         
-def save_results(model):
-    print(s)
-    
-def see_available_models():
-    print(s)
-    
-def load_data_to_train(path_data_json):
-    
-    
-    print(s)
-    
-def load_data_to_test(data_json):
-    print(s)
-    
+
