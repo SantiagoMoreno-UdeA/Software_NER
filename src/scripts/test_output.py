@@ -7,8 +7,6 @@ Created on Thu Oct 27 15:28:13 2022
 
 import pandas as pd
 import os
-import operator
-import json
 from flair.data import Sentence
 
 default_path = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Software NER/src/scripts"
@@ -19,7 +17,7 @@ os.chdir(default_path)
 #2e2a0a20-89f5-11e8-a22e-dfff0e4dee48-0
 #4fa73510-8a13-11e8-8585-f31ad517583b-0
 
-path_data = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Datasets/camara_comercio_NER/gt/3cb4fa20-89cb-11e8-a485-d149999fe64b-0.json "
+path_data = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Datasets/camara_comercio_NER/gt/4fa73510-8a13-11e8-8585-f31ad517583b-0.json "
 path_predicted = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Software NER/document_tagged.json"
 
 

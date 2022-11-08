@@ -17,10 +17,21 @@ if __name__ == '__main__':
     parser.add_argument('input_data', type=str, help='Absolute path input file')
     parser.add_argument('output_data', type=str, help='Absolute path output file')
     args = parser.parse_args()
-    print(args.model, args.input_data, args.output_data)
-    use_model(args.model, args.input_data, args.output_data)
-    print('Tagged complete')
+    
+    #print(args.model, args.input_data, args.output_data)
+    Error = use_model(args.model, args.input_data, args.output_data)
+    if type(Error)==int:
+        print('Tagged not complete, error code {}'.format(Error))
+    else:
+        print('Tagged complete')
 
 # path_data = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Datasets/camara_comercio_NER/gt/3cb4fa20-89cb-11e8-a485-d149999fe64b-0.json "
 # output_dir = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Software NER/document_tagged.json"
 # sentence = use_model('CCC', path_data, output_dir)
+#%%
+
+def sum(a,b):
+    c = a+b
+    return c
+a=sum(3,4)
+type(a)
