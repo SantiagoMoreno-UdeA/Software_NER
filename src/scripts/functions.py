@@ -26,27 +26,63 @@ def check_create(path):
     
     if not (os.path.isdir(path)):
         os.makedirs(path)
+        
+        
+def characterize_data():
+    data_folder  = '../../data/train'
+    columns = {0: 'text', 1:'ner'}
+    
+    # init a corpus using column format, data folder and the names of the train, dev and test files
+    
+    try:
+        corpus: Corpus = ColumnCorpus(data_folder, columns,
+                                      train_file='train.txt',
+                                      test_file='test.txt' )
+                                      #dev_file='dev.txt')
+    except: 
+        print('Invalid input document in training')
+        return 8
 
-def upsampling_data(path_data, probability, entities_to_upsample, entities, methods):
+    # 2. what tag do we want to predict?
+    tag_type = 'ner'
+
+    #tag_dictionary = corpus.make_label_dictionary(label_type=tag_type)
+    tag_dictionary = corpus.get_label_distribution()
+    return tag_dictionary
+    #return corpus
     
-    upsampler = upsampling_ner('path_data/train.txt', entities+['O'])
-    data, data_labels = upsampler.get_dataset()
-    new_samples, new_labels = upsampler.upsampling(entities_to_upsample ,probability,methods)
-    data += new_samples
-    data_labels += new_labels
+
+def upsampling_data(entities_to_upsample, probability,  entities):
     
-    AQUI
-    # AQUI
-    return json
+    data_folder  = '../../data/train'
+    columns = {'text':0, 'ner':1}
+    for m in ["SiS","LwTR","MR","SR", "MBT"]:
+        upsampler = upsampling_ner(data_folder+'/train.txt', entities+['O'], columns)
+        data, data_labels = upsampler.get_dataset()
+        new_samples, new_labels = upsampler.upsampling(entities_to_upsample,probability,[m])
+        data += new_samples
+        data_labels += new_labels
+
+        with open(data_folder+'/train.txt', mode='w', encoding='utf-8') as f:
+            for l,sentence in enumerate(data):
+                for j,word in enumerate(sentence):
+                    f.write(word+' '+ data_labels[l][j])
+                    f.write('\n')
+    
+                if l < (len(data)-1):
+                    f.write('\n')
 
 
 def training_model(name):
     flair.device = torch.device('cpu') 
-    data_folder = data_folder = '../../data/train'
-    path_model = '../../models/{}'.format(name)
     
+    data_folder  = '../../data/train'
+    path_model = '../../models/{}'.format(name)
+    if (os.path.isdir(path_model)): print('WARNING, model already exists will be overwritten')
     columns = {0: 'text', 1:'ner'}
     # init a corpus using column format, data folder and the names of the train, dev and test files
+    
+    
     try:
         corpus: Corpus = ColumnCorpus(data_folder, columns,
                                       train_file='train.txt',
@@ -205,12 +241,10 @@ def json_to_txt(path_data_documents):
             j = t[0]['end']
             tags = df['mentions']
             if tags:
-                
                 tg = tags[0]['id']
                 tg = tags[0]['begin']
                 tg = tags[0]['end']
                 tg = tags[0]['type']
-                print('Final')
         except: 
             print('Invalid JSON input format in document {}'.format(doc))
             return 3

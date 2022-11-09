@@ -48,7 +48,7 @@ class upsampling_ner:
         None.
 
         """
-        col  = self.__pos_labels['NER']
+        col  = self.__pos_labels['ner']
         self.__dataset = []
         self.__data_labels = []
         data_temp = []
@@ -90,11 +90,13 @@ class upsampling_ner:
             mentions. key= number of mention, value= label of the mention.
 
         """
-        
+
         dict_mentions = {}
         dict_label_mentions = {}
         mention = 0
+        #print(sentence)
         dict_mentions[mention] = [sentence[0]]
+        
         dict_label_mentions[mention] = labels[0]
         for i,label in enumerate(labels[1:]):
             if label == labels[i]:
@@ -105,7 +107,7 @@ class upsampling_ner:
                 dict_label_mentions[mention] = labels[i+1]
             
         return dict_mentions, dict_label_mentions
-    
+        
         
     def __get_total_mentions_and_tokens(self):
         """
@@ -126,12 +128,13 @@ class upsampling_ner:
             self.__tokens_per_entity[key] = []
             
         for i,sentence in enumerate(self.__dataset):
-            for j,word in enumerate(sentence):
-                self.__tokens_per_entity[self.__data_labels[i][j]].append(word) 
-                
-            mentions,label_mentions = self.get_mentions(sentence, self.__data_labels[i])
-            for n,label in enumerate(label_mentions.values()):
-                if mentions[n] not in self.__all_mentions[label]: self.__all_mentions[label].append(mentions[n]);
+            if sentence:
+                for j,word in enumerate(sentence):
+                    self.__tokens_per_entity[self.__data_labels[i][j]].append(word) 
+                    
+                mentions,label_mentions = self.get_mentions(sentence, self.__data_labels[i])
+                for n,label in enumerate(label_mentions.values()):
+                    if mentions[n] not in self.__all_mentions[label]: self.__all_mentions[label].append(mentions[n]);
     
     
     def get_mentions_dict(self):
@@ -379,46 +382,47 @@ class upsampling_ner:
             new_mentions = []
             new_labels = []
             for i,sentence in enumerate(self.__dataset):
-                sentence_mentions,label_mentions = self.get_mentions(sentence, self.__data_labels[i])
-                
-                
-                if "SiS" in methods:
-                    new_mentions_temp = self.shuffle_within_segments(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
-                    if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
-                        new_mentions.append(new_mentions_temp)
-                        new_labels.append(label_mentions)
-                        
-                
-                if "LwTR" in methods:
-                    new_mentions_temp = self.Label_wise_token_replacement(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
-                    if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
-                        new_mentions.append(new_mentions_temp)
-                        new_labels.append(label_mentions)
+                if sentence:
+                    sentence_mentions,label_mentions = self.get_mentions(sentence, self.__data_labels[i])
+                    
+                    
+                    if "SiS" in methods:
+                        new_mentions_temp = self.shuffle_within_segments(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
+                        if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
+                            new_mentions.append(new_mentions_temp)
+                            new_labels.append(label_mentions)
+                            
+                    
+                    if "LwTR" in methods:
+                        new_mentions_temp = self.Label_wise_token_replacement(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
+                        if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
+                            new_mentions.append(new_mentions_temp)
+                            new_labels.append(label_mentions)
+                            
                         
                     
-                
+                        
+                    if "MR" in methods:
+                        new_mentions_temp = self.mention_replacement(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
+                        if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
+                            new_mentions.append(new_mentions_temp)
+                            new_labels.append(label_mentions)
+                            
+    
                     
-                if "MR" in methods:
-                    new_mentions_temp = self.mention_replacement(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
-                    if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
-                        new_mentions.append(new_mentions_temp)
-                        new_labels.append(label_mentions)
-                        
-
-                
-                if "SR" in methods:
-                    new_mentions_temp = self.synonym_replacement(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
-                    if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
-                        new_mentions.append(new_mentions_temp)
-                        new_labels.append(label_mentions)
-                        
-                        
-                        
-                if "MBT" in methods:
-                    new_mentions_temp = self.mention_back_traslation(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
-                    if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
-                        new_mentions.append(new_mentions_temp)
-                        new_labels.append(label_mentions)
+                    if "SR" in methods:
+                        new_mentions_temp = self.synonym_replacement(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
+                        if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
+                            new_mentions.append(new_mentions_temp)
+                            new_labels.append(label_mentions)
+                            
+                            
+                            
+                    if "MBT" in methods:
+                        new_mentions_temp = self.mention_back_traslation(copy.deepcopy(sentence_mentions), label_mentions,labels ,p)
+                        if new_mentions_temp not in new_mentions and new_mentions_temp != sentence_mentions: 
+                            new_mentions.append(new_mentions_temp)
+                            new_labels.append(label_mentions)
                     
                     
             #Turn the mentions into sentences
