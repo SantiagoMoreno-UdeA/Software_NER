@@ -13,7 +13,7 @@ os.chdir(default_path)
         
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(add_help=True)
+    parser = argparse.ArgumentParser(add_help=True, usage='Train a new model with given data (GPU optional)')
     parser.add_argument('-m','--model', default='New_model', type=str, nargs='?', help='New model name', required=False)
     parser.add_argument('-d','--input_dir', type=str, nargs='?', help='Absolute path input directory', required=True)
     parser.add_argument('-u','--up_sample_flag', type=str2bool, nargs='?',const=True, default=False , help='Boolean value to upsampling the data = True or not upsampling = False', required=False, choices=(True, False))
@@ -21,10 +21,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     
-    #print(args.input_dir)
-
-
-#path_data_documents="C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Datasets/camara_comercio_NER/gt"
 
     
     Error = json_to_txt(args.input_dir)

@@ -15,7 +15,7 @@ output_dir = "../../data/tagged/document_tagged.json"
 
         
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(add_help=True, usage='Tag a document with a pre-trained model (GPU optional)')
     parser.add_argument('-m','--model', default='CCC', type=str, nargs='?', help='New model name', required=True)
     parser.add_argument('-id','--input_data', type=str, nargs='?', help='Absolute path input file', required=True)
     parser.add_argument('-od','--output_data', const=output_dir, default=output_dir, type=str, nargs='?', help='Absolute path output file', required=False)
