@@ -20,12 +20,23 @@ import json
 import os
 import operator
 import flair
+import argparse
 
 def check_create(path):
     import os
     
     if not (os.path.isdir(path)):
         os.makedirs(path)
+        
+def str2bool(v):
+    if isinstance(v, bool):
+       return v
+    if v.lower() in ('yes', 'True','true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'False', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
         
         
 def characterize_data():
@@ -53,7 +64,7 @@ def characterize_data():
     
 
 def upsampling_data(entities_to_upsample, probability,  entities):
-    
+    print('upsampling')
     data_folder  = '../../data/train'
     columns = {'text':0, 'ner':1}
     for m in ["SiS","LwTR","MR","SR", "MBT"]:
@@ -73,8 +84,13 @@ def upsampling_data(entities_to_upsample, probability,  entities):
                     f.write('\n')
 
 
-def training_model(name):
-    flair.device = torch.device('cpu') 
+def training_model(name, cuda):
+    
+    if cuda:
+        flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
+        if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
+    else:
+        flair.device = torch.device('cpu')
     
     data_folder  = '../../data/train'
     path_model = '../../models/{}'.format(name)
@@ -147,12 +163,19 @@ def training_model(name):
                       optimizer=torch.optim.AdamW,
                       )
     except: 
+        pass
         print('Error training the model')
         return 7
     
     print("Model {} trained and saved in {}".format(name,'models/{}'.format(name)))
     
-def use_model(name, path_data, output_dir):
+def use_model(name, path_data, output_dir, cuda):
+    
+    if cuda:
+        flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
+        if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
+    else:
+        flair.device = torch.device('cpu')
     
     #--------------Load the trained model-------------------------
     path_model = '../../models/{}'.format(name)
@@ -326,7 +349,7 @@ def json_to_txt(path_data_documents):
                 f.write(X_temp[i]+' '+ y_temp[i])
                 f.write('\n')
                 
-                if count >= 50: 
+                if count >= 150: 
                     count = 0
                     f.write('\n')
 
