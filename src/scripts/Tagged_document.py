@@ -8,7 +8,7 @@ import os
 import argparse
 from functions import use_model, str2bool
 
-default_path = "C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Software NER/src/scripts"
+default_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(default_path)
 output_dir = "../../data/tagged/document_tagged.json"
 

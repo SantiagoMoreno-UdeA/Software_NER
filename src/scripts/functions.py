@@ -64,7 +64,7 @@ def characterize_data():
     
 
 def upsampling_data(entities_to_upsample, probability,  entities):
-    print('upsampling')
+    print('-'*20,'upsampling','-'*20)
     data_folder  = '../../data/train'
     columns = {'text':0, 'ner':1}
     for m in ["SiS","LwTR","MR","SR", "MBT"]:
@@ -83,7 +83,8 @@ def upsampling_data(entities_to_upsample, probability,  entities):
                 if l < (len(data)-1):
                     f.write('\n')
 
-
+    print('-'*20,'upsampling complete','-'*20)
+    
 def training_model(name, cuda):
     
     if cuda:
@@ -185,7 +186,7 @@ def use_model(name, path_data, output_dir, cuda):
         return 10
         
     if not os.path.isfile(path_data): 
-        print('Input file does not exists')
+        print('Input file is not a directory')
         return 9 
     
     try:
@@ -214,7 +215,7 @@ def use_model(name, path_data, output_dir, cuda):
     except: 
         print('Invalid JSON format in document {}'.format(path_data))
         return 3
-    
+    print('-'*20,'Tagging','-'*20)
     
     #-----------------Tagged the document-------------------------
     results = {'text':"", 'text_labeled':"",'sentences':[]}
@@ -239,7 +240,7 @@ def use_model(name, path_data, output_dir, cuda):
     with open(output_dir, "w", encoding='utf-8') as write_file:
         json.dump(results, write_file)
 
-    
+    print('-'*20,'Tagging complete','-'*20)
        
 def json_to_txt(path_data_documents):
     #-------------List the documents in the path------------
