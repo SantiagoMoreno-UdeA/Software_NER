@@ -2,7 +2,7 @@
 """
 Created on Tue Oct 25 00:32:02 2022
 
-@author: sanmo
+@author: Santiago Moreno
 """
 import os 
 import argparse

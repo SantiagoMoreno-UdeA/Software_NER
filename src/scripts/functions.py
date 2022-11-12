@@ -2,7 +2,7 @@
 """
 Created on Tue Oct 11 16:46:45 2022
 
-@author: gita
+@author: Santiago Moreno
 """
 from upsampling import upsampling_ner
 from flair.datasets import ColumnCorpus
@@ -165,10 +165,48 @@ def training_model(name, cuda):
                       )
     except: 
         pass
-        print('Error training the model')
+        print('Error training the model, try whithout setting CUDA False')
         return 7
     
     print("Model {} trained and saved in {}".format(name,'models/{}'.format(name)))
+    
+    
+def tag_sentence(sentence, name, cuda):
+    
+    if cuda:
+        flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
+        if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
+    else:
+        flair.device = torch.device('cpu')
+    
+    #--------------Load the trained model-------------------------
+    path_model = '../../models/{}'.format(name)
+    
+    
+    try:
+        tagger = SequenceTagger.load(path_model+'/best-model.pt')
+    except:
+        try:
+            tagger = SequenceTagger.load(path_model+'/final-model.pt')
+        except: 
+            print('Invalid model')
+            return 0
+        
+    #------------------Tagged sentence---------------------
+    sentence_f = Sentence(sentence)
+    tagger.predict(sentence_f)
+    sentence_tokenized = []
+    for token in sentence_f.tokens:
+        t = token.get_label()
+        if t.value == 'O':
+            sentence_tokenized += [token.text]
+        else: 
+            sentence_tokenized += [t.shortstring]
+            
+    sen_tagged = ' ' .join(sentence_tokenized)
+
+    return sen_tagged
+    
     
 def use_model(name, path_data, output_dir, cuda):
     
@@ -217,20 +255,29 @@ def use_model(name, path_data, output_dir, cuda):
         return 3
     print('-'*20,'Tagging','-'*20)
     
+    
+    
     #-----------------Tagged the document-------------------------
     results = {'text':"", 'text_labeled':"",'sentences':[]}
     for s in sentences:
         sentence = Sentence(s['text'])
         tagger.predict(sentence)
-        if '→' in sentence.to_tagged_string():
-            sen_tagged = ' ' .join(sentence.to_tagged_string().split('→')[1][2:-1].split(','))
-        else: 
-            sen_tagged = sentence.to_tagged_string()[11:-1]
-        sen_dict_temp = {'text':sentence.to_plain_string(), 'text_labeled':sen_tagged, 'tokens':[]}
+        sen_dict_temp = {'text':sentence.to_plain_string(), 'text_labeled':'', 'tokens':[]}
         #return sentence
-        for t in sentence.tokens:
-            token = {'text':t.text, 'label':t.get_label('ner').value}
-            sen_dict_temp['tokens'].append(token)
+        sentence_tokenized = []
+        for token in sentence.tokens:
+            token_dict = {'text':token.text, 'label':token.get_label('ner').value}
+            sen_dict_temp['tokens'].append(token_dict)
+            
+            t = token.get_label('ner')
+            if t.value == 'O':
+                sentence_tokenized += [token.text]
+            else: 
+                sentence_tokenized += [t.shortstring]
+        
+        
+        sen_tagged = ' ' .join(sentence_tokenized)
+        sen_dict_temp['text_labeled'] = sen_tagged
         results['sentences'].append(sen_dict_temp)
         results['text'] += sentence.to_plain_string() 
         #return sentence
@@ -240,7 +287,7 @@ def use_model(name, path_data, output_dir, cuda):
     with open(output_dir, "w", encoding='utf-8') as write_file:
         json.dump(results, write_file)
 
-    print('-'*20,'Tagging complete','-'*20)
+    print('-'*20,'Tagged complete','-'*20)
        
 def json_to_txt(path_data_documents):
     #-------------List the documents in the path------------
