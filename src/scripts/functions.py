@@ -310,10 +310,14 @@ def use_model(name, path_data, output_dir, cuda):
         results['text_labeled'] += sen_tagged
         
     #-----------------Save the results-------------------------
-    with open(output_dir, "w", encoding='utf-8') as write_file:
-        json.dump(results, write_file)
-
-    print('-'*20,'Tagged complete','-'*20)
+    try:
+        with open(output_dir, "w", encoding='utf-8') as write_file:
+            json.dump(results, write_file)
+    
+        print('-'*20,'Tagged complete','-'*20)
+    except:
+        print('Error in output file')
+        return 11
        
     return results
 

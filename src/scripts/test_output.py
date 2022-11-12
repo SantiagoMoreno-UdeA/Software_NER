@@ -102,29 +102,37 @@ for idx in range(len(dic_output['tag'])):
           
 #           sentences:[{ text:"Texto"
           
-#           text_labeled: "Texto \ENTITY"
-          
-#           tokens: [ {text:"Texto", label : "ENTITY"},
-#                    {text:"Texto", label : "ENTITY"},
-#                    {text:"Texto", label : "ENTITY"}
+    #           text_labeled: "Texto \ENTITY"
               
-#               ] 
+    #           tokens: [ {text:"Texto", label : "ENTITY"},
+    #                    {text:"Texto", label : "ENTITY"},
+    #                    {text:"Texto", label : "ENTITY"}
+                  
+    #               ] 
+                  
+    #               },
+      
+    #            { text:"Texto"
               
-#               },
-  
-#            { text:"Texto"
-          
-#           text_labeled: "Texto <ENTITY>"
-          
-#           tokens: [ {text:"Texto", label : "ENTITY"},
-#                    {text:"Texto", label : "ENTITY"},
-#                    {text:"Texto", label : "ENTITY"}
+    #           text_labeled: "Texto <ENTITY>"
+              
+    #           tokens: [ {text:"Texto", label : "ENTITY"},
+    #                    {text:"Texto", label : "ENTITY"},
+    #                    {text:"Texto", label : "ENTITY"}
               
 #               ]
  
 #               }          
-#            ]
-
+#            ],
+            # entities:[
+            #     {
+            #         'entity': "ENTITY",
+            #         'index': num,
+            #         'word': "Texto",
+            #         'start': num,
+            #         'end' : num
+            #     }
+            #     ]
 #     }
 
 #%% 

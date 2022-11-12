@@ -9,4 +9,5 @@
 8 Invalid input document in training 
 9 Document does not exists
 10 Model does not exists 
+11 Error in output JSON
 
