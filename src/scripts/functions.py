@@ -173,6 +173,9 @@ def training_model(name, cuda):
     
 def tag_sentence(sentence, name, cuda):
     
+    results={'Sentence_tagged':'', 'Highligth':{}}
+    Highligth_dict={"text": "", "entities": []}
+    
     if cuda:
         flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
         if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
@@ -196,16 +199,28 @@ def tag_sentence(sentence, name, cuda):
     sentence_f = Sentence(sentence)
     tagger.predict(sentence_f)
     sentence_tokenized = []
-    for token in sentence_f.tokens:
+    Highligth_dict['text'] = sentence_f.to_plain_string()
+    
+    for indx,token in enumerate(sentence_f.tokens):
+        
         t = token.get_label()
         if t.value == 'O':
             sentence_tokenized += [token.text]
         else: 
             sentence_tokenized += [t.shortstring]
-            
+            token_info={
+                'entity': t.value ,
+                'index' : indx,
+                'word' : token.text,
+                'start': token.start_position,
+                'end' : token.end_position
+                
+                }
+            Highligth_dict["entities"].append(token_info)
     sen_tagged = ' ' .join(sentence_tokenized)
-
-    return sen_tagged
+    results['Highligth'] = Highligth_dict
+    results['Sentence_tagged'] = sen_tagged
+    return results
     
     
 def use_model(name, path_data, output_dir, cuda):
