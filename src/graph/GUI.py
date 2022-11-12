@@ -17,23 +17,27 @@ from functions import use_model, tag_sentence
 
 
 models = os.listdir('../../models')
+
 def Tagging(Mode, Model, Sentence, Input_file, Output_file, Cuda):
     if Mode == '.JSON':
-        use_model(Model, Input_file, Output_file, Cuda)
+        results = use_model(Model, Input_file, Output_file, Cuda)
+        return { "text" : results['text'], 'entities': results['entities']}
     elif Mode == 'Sentence':
-        return tag_sentence(Sentence, Model, Cuda)
-    return 0
+        results = tag_sentence(Sentence, Model, Cuda)
+        return results['Highligth']
+
 demo = gr.Interface(
     Tagging,
     [
+     
          gr.Radio(['Sentence', '.JSON']),
          gr.Radio(list(models)),
-        "text", 
-        "text", 
-        "text",
-        gr.Radio([True,False]),
+         gr.Textbox(placeholder="Enter sentence here..."), 
+         gr.Textbox(placeholder="Enter sentence here..."), 
+         gr.Textbox(placeholder="Enter sentence here..."),
+         gr.Radio([True,False]),
     ],
-    "text",
+    gr.HighlightedText(),
     # examples=[
     #     [5, "add", 3],
     #     [4, "divide", 2],

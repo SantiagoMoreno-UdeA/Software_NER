@@ -273,14 +273,16 @@ def use_model(name, path_data, output_dir, cuda):
     
     
     #-----------------Tagged the document-------------------------
-    results = {'text':"", 'text_labeled':"",'sentences':[]}
+    results = {'text':"", 'text_labeled':"",'sentences':[], 'entities': []}
+    indx_prev = 0
+    pos_prev = 0
     for s in sentences:
         sentence = Sentence(s['text'])
         tagger.predict(sentence)
         sen_dict_temp = {'text':sentence.to_plain_string(), 'text_labeled':'', 'tokens':[]}
         #return sentence
         sentence_tokenized = []
-        for token in sentence.tokens:
+        for indx,token in enumerate(sentence.tokens):
             token_dict = {'text':token.text, 'label':token.get_label('ner').value}
             sen_dict_temp['tokens'].append(token_dict)
             
@@ -289,8 +291,17 @@ def use_model(name, path_data, output_dir, cuda):
                 sentence_tokenized += [token.text]
             else: 
                 sentence_tokenized += [t.shortstring]
-        
-        
+                token_info={
+                    'entity': t.value ,
+                    'index' : indx + indx_prev,
+                    'word' : token.text,
+                    'start': token.start_position + pos_prev,
+                    'end' : token.end_position +pos_prev
+                    
+                    }
+                results["entities"].append(token_info)
+        indx_prev = len(sentence.tokens)
+        pos_prev = len(sentence.to_plain_string())
         sen_tagged = ' ' .join(sentence_tokenized)
         sen_dict_temp['text_labeled'] = sen_tagged
         results['sentences'].append(sen_dict_temp)
@@ -304,6 +315,8 @@ def use_model(name, path_data, output_dir, cuda):
 
     print('-'*20,'Tagged complete','-'*20)
        
+    return results
+
 def json_to_txt(path_data_documents):
     #-------------List the documents in the path------------
     documents=os.listdir(path_data_documents)

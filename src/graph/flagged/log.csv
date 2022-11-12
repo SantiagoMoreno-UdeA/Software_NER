@@ -1,0 +1,2 @@
+Mode,Model,Sentence,Input_file,Output_file,Cuda,output,flag,username,timestamp
+.JSON,CCC,Camara de comercio de Medellin el día 01/11/2021.,C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Datasets/camara_comercio_NER/gt/3cb4fa20-89cb-11e8-a485-d149999fe64b-0.json,C:/Users/gita/OneDrive - Universidad de Antioquia/GITA/Maestría/Programas/Software NER/document_tagged.json,True,C:\Users\gita\OneDrive - Universidad de Antioquia\GITA\Maestría\Programas\Software NER\src\graph\flagged\output\tmpvhhy34mr.json,,,2022-11-12 16:10:56.049898
