@@ -21,38 +21,44 @@ models = os.listdir('../../models')
 def Trainer():
     return 0
 
+def Tagger_sentence(Model, Sentence, Cuda):
+    results = tag_sentence(Sentence, Model, Cuda)
+    if type(results)==int:
+        return "Error {}, see documentation".format(results)
+    else:
+        return results['Highligth']
 
-def Tagger(Mode, Model, Sentence, Input_file, Output_file, Cuda):
-    if Mode == '.JSON':
-        results = use_model(Model, Input_file, Output_file, Cuda)
-        if type(results)==int:
-            return "Error {}, see documentation".format(results)
-        else:
-            return { "text" : results['text'], 'entities': results['entities']}
-    elif Mode == 'Sentence':
-        results = tag_sentence(Sentence, Model, Cuda)
-        if type(results)==int:
-            return "Error {}, see documentation".format(results)
-        else:
-            return results['Highligth']
+def Tagger_json(Model, Input_file, Output_file, Cuda):
+    results = use_model(Model, Input_file, Output_file, Cuda)
+    if type(results)==int:
+        return "Error {}, see documentation".format(results)
+    else:
+        return { "text" : results['text'], 'entities': results['entities']}
+
 
 
 with gr.Blocks() as demo:
     gr.Markdown("Named Entity Recognition(NER) System. Use Tagger to do NER from a pretrained model, or use Trainer to train a new NER model")
     with gr.Tab("Tagger"):
-        
-        inputs =[
-         
-             gr.Radio(['Sentence', '.JSON'], label='Mode'),
-             gr.Radio(list(models), label='Model'),
-             gr.Textbox(placeholder="Enter sentence here...", label='Sentence'), 
-             gr.Textbox(placeholder="Enter sentence here...", label='Input file path'), 
-             gr.Textbox(placeholder="Enter sentence here...", label='Output file path'),
-             gr.Radio([True,False], label='CUDA'),
-        ] 
-        
-        output = gr.HighlightedText()
-        tagger = gr.Button("Tag")
+        with gr.Tab("Sentence"):
+            inputs =[
+                 gr.Radio(list(models), label='Model'),
+                 gr.Textbox(placeholder="Enter sentence here...", label='Sentence'), 
+                 gr.Radio([True,False], label='CUDA'),
+            ]
+            output = gr.HighlightedText()
+            tagger_sen = gr.Button("Tag")
+            tagger_sen.click(Tagger_sentence, inputs=inputs, outputs=output)
+        with gr.Tab(".JSON"):
+            inputs =[
+                 gr.Radio(list(models), label='Model'),
+                 gr.Textbox(placeholder="Enter sentence here...", label='Input file path'), 
+                 gr.Textbox(placeholder="Enter sentence here...", label='Output file path'),
+                 gr.Radio([True,False], label='CUDA'),
+            ]
+            output = gr.HighlightedText()
+            tagger_json = gr.Button("Tag")
+            tagger_json.click(Tagger_json, inputs=inputs, outputs=output)
     with gr.Tab("Trainer"):
         with gr.Row():
             image_input = gr.Image()
@@ -60,7 +66,7 @@ with gr.Blocks() as demo:
         trainer = gr.Button("Train")
 
 
-    tagger.click(Tagger, inputs=inputs, outputs=output)
+    
     trainer.click(Trainer, inputs=image_input, outputs=image_output)
     
     
@@ -85,4 +91,4 @@ with gr.Blocks() as demo:
 #     title="Named Entity Recognizer",
 #     description="Named Entity Recognition system from a pretrained model",
 # )
-demo.launch()
+demo.launch(inline=True, inbrowser=True)
