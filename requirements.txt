@@ -1,3 +1,5 @@
-python==3.9.13
-pandas==1.5.1
-flair==11.3
+python == 3.9.13
+pandas == 1.5.1
+flair == 11.3
+nltk == 3.7 
+deep_translator == 1.9.1
