@@ -14,7 +14,7 @@ default_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(default_path)
 sys.path.insert(0, '../scripts')
 
-from functions import use_model, tag_sentence, json_to_txt, training_model, characterize_data, upsampling_data, usage_cuda
+from functions import use_model, tag_sentence, json_to_txt, training_model, characterize_data, upsampling_data, usage_cuda, copy_data
 
 
 models = os.listdir('../../models')
@@ -22,7 +22,7 @@ models = os.listdir('../../models')
 #-------------------------------------------Functions-----------------------------------------------
 
 
-def Trainer(fast, model_name, input_dir, Upsampling, Cuda):
+def Trainer(fast, model_name, standard, input_dir, Upsampling, Cuda):
     if fast: epochs = 1
     else: epochs = 20
     
@@ -32,10 +32,12 @@ def Trainer(fast, model_name, input_dir, Upsampling, Cuda):
         cuda_info = usage_cuda(False)
     
     
-    
-    Error = json_to_txt(input_dir)
-    if type(Error)==int:
-        return 'Error processing the input documents, code error {}'.format(Error)
+    if standard:
+        copy_data(input_dir)
+    else:
+        Error = json_to_txt(input_dir)
+        if type(Error)==int:
+            return 'Error processing the input documents, code error {}'.format(Error)
     if Upsampling:
         yield cuda_info+'\n'+'-'*20+'Upsampling'+'-'*20
         entities_dict=characterize_data()
@@ -83,25 +85,31 @@ if __name__ == '__main__':
         gr.Markdown("Named Entity Recognition(NER) System.")
         gr.Markdown("Use Tagger to apply NER from a pretrained model in a sentence or a given document in JSON format.")
         gr.Markdown("Use Trainer to train a new NER model from a directory of documents in JSON format.")
-        
         with gr.Tab("Tagger"):
             with gr.Tab("Sentence"):
                 with gr.Row():
                     with gr.Column():
+                        b = gr.Radio(list(models), label='Model')
                         inputs =[
-                             gr.Radio(list(models), label='Model'),
+                             b,
                              gr.Textbox(placeholder="Enter sentence here...", label='Sentence'), 
                              gr.Radio([True,False], label='CUDA', value=False),
                         ]
                     output = gr.HighlightedText()
                 tagger_sen = gr.Button("Tag")
                 tagger_sen.click(Tagger_sentence, inputs=inputs, outputs=output)
+                b.change(fn=lambda value: gr.update(choices=list(os.listdir('../../models'))), inputs=b, outputs=b)
+                # gr.Examples=[
+                #     "",
+                #     inputs=inputs,
+                #     ]
            
             with gr.Tab(".JSON"):
                 with gr.Row():
                     with gr.Column(): 
+                        c = gr.Radio(list(models), label='Model')
                         inputs =[
-                             gr.Radio(list(models), label='Model'),
+                             c,
                              gr.File(label='Input data file'),
                              #gr.Textbox(placeholder="Enter path here...", label='Input data file path'), 
                              gr.Textbox(placeholder="Enter path here...", label='Output data file path'), #value='../../data/Tagged/document_tagged.json'),
@@ -113,6 +121,7 @@ if __name__ == '__main__':
                         ]
                 tagger_json = gr.Button("Tag")
                 tagger_json.click(Tagger_json, inputs=inputs, outputs=output)
+                c.change(fn=lambda value: gr.update(choices=list(os.listdir('../../models'))), inputs=c, outputs=c)
                 
         
         with gr.Tab("Trainer"):
@@ -121,6 +130,7 @@ if __name__ == '__main__':
                     train_input = inputs =[
                          gr.Radio([True,False], label='Fast training', value=True),
                          gr.Textbox(placeholder="Enter model name here...", label='New model name'),
+                         gr.Radio([True,False], label='Standard input', value=False),
                          gr.Textbox(placeholder="Enter path here...", label='Input data directory path'), 
                          gr.Radio([True,False], label='Upsampling', value=False),
                          gr.Radio([True,False], label='CUDA', value=False),
@@ -131,6 +141,7 @@ if __name__ == '__main__':
     
         
         trainer.click(Trainer, inputs=train_input, outputs=train_output)
+        
         
     demo.queue()
     demo.launch(inbrowser=True)

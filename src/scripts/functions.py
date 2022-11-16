@@ -13,6 +13,7 @@ from flair.embeddings import TransformerWordEmbeddings
 from torch.optim.lr_scheduler import OneCycleLR
 from flair.data import Sentence
 from sklearn.model_selection import StratifiedGroupKFold
+from distutils.dir_util import copy_tree
 import numpy as np
 import torch
 import pandas as pd
@@ -38,7 +39,11 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
         
-        
+
+def copy_data(original_path):
+    data_folder  = '../../data/train'
+    copy_tree(original_path, data_folder)
+    
 def characterize_data():
     data_folder  = '../../data/train'
     columns = {0: 'text', 1:'ner'}
@@ -226,13 +231,7 @@ def tag_sentence(sentence, name):
     return results
     
     
-def use_model(name, path_data, output_dir, cuda):
-    
-    if cuda:
-        flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
-        if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
-    else:
-        flair.device = torch.device('cpu')
+def use_model(name, path_data, output_dir):
     
     #--------------Load the trained model-------------------------
     path_model = '../../models/{}'.format(name)

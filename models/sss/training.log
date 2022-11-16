@@ -1,587 +1,587 @@
-2022-11-16 18:25:29,223 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:29,225 Model: "SequenceTagger(
+2022-11-16 18:27:25,163 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,166 Model: "SequenceTagger(
   (embeddings): TransformerWordEmbeddings(
     (model): XLMRobertaModel(
-      (embeddings): XLMRobertaEmbeddings(
+      (embeddings): RobertaEmbeddings(
         (word_embeddings): Embedding(250002, 1024, padding_idx=1)
         (position_embeddings): Embedding(514, 1024, padding_idx=1)
         (token_type_embeddings): Embedding(1, 1024)
         (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
         (dropout): Dropout(p=0.1, inplace=False)
       )
-      (encoder): XLMRobertaEncoder(
+      (encoder): RobertaEncoder(
         (layer): ModuleList(
-          (0): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (0): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (1): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (1): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (2): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (2): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (3): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (3): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (4): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (4): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (5): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (5): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (6): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (6): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (7): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (7): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (8): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (8): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (9): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (9): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (10): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (10): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (11): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (11): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (12): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (12): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (13): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (13): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (14): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (14): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (15): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (15): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (16): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (16): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (17): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (17): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (18): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (18): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (19): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (19): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (20): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (20): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (21): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (21): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (22): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (22): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
             )
           )
-          (23): XLMRobertaLayer(
-            (attention): XLMRobertaAttention(
-              (self): XLMRobertaSelfAttention(
+          (23): RobertaLayer(
+            (attention): RobertaAttention(
+              (self): RobertaSelfAttention(
                 (query): Linear(in_features=1024, out_features=1024, bias=True)
                 (key): Linear(in_features=1024, out_features=1024, bias=True)
                 (value): Linear(in_features=1024, out_features=1024, bias=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
-              (output): XLMRobertaSelfOutput(
+              (output): RobertaSelfOutput(
                 (dense): Linear(in_features=1024, out_features=1024, bias=True)
                 (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
                 (dropout): Dropout(p=0.1, inplace=False)
               )
             )
-            (intermediate): XLMRobertaIntermediate(
+            (intermediate): RobertaIntermediate(
               (dense): Linear(in_features=1024, out_features=4096, bias=True)
               (intermediate_act_fn): GELUActivation()
             )
-            (output): XLMRobertaOutput(
+            (output): RobertaOutput(
               (dense): Linear(in_features=4096, out_features=1024, bias=True)
               (LayerNorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
               (dropout): Dropout(p=0.1, inplace=False)
@@ -589,7 +589,7 @@
           )
         )
       )
-      (pooler): XLMRobertaPooler(
+      (pooler): RobertaPooler(
         (dense): Linear(in_features=1024, out_features=1024, bias=True)
         (activation): Tanh()
       )
@@ -600,55 +600,23 @@
   (linear): Linear(in_features=1024, out_features=14, bias=True)
   (loss_function): CrossEntropyLoss()
 )"
-2022-11-16 18:25:29,226 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:29,226 Corpus: "Corpus: 23 train + 3 dev + 3 test sentences"
-2022-11-16 18:25:29,226 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:29,226 Parameters:
-2022-11-16 18:25:29,226  - learning_rate: "0.000005"
-2022-11-16 18:25:29,227  - mini_batch_size: "1"
-2022-11-16 18:25:29,227  - patience: "3"
-2022-11-16 18:25:29,227  - anneal_factor: "0.5"
-2022-11-16 18:25:29,227  - max_epochs: "1"
-2022-11-16 18:25:29,227  - shuffle: "True"
-2022-11-16 18:25:29,227  - train_with_dev: "False"
-2022-11-16 18:25:29,228  - batch_growth_annealing: "False"
-2022-11-16 18:25:29,228 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:29,228 Model training base path: "../../models/CCC_fast"
-2022-11-16 18:25:29,228 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:29,228 Device: cpu
-2022-11-16 18:25:29,229 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:29,229 Embeddings storage mode: cpu
-2022-11-16 18:25:29,229 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:33,616 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:33,617 Exiting from training early.
-2022-11-16 18:25:33,617 Saving model ...
-2022-11-16 18:25:43,819 Done.
-2022-11-16 18:25:43,821 ----------------------------------------------------------------------------------------------------
-2022-11-16 18:25:43,824 Testing using last state of model ...
-2022-11-16 18:25:45,180 Evaluating as a multi-label problem: False
-2022-11-16 18:25:45,186 0.0395	0.2	0.0659	0.0395
-2022-11-16 18:25:45,187 
-Results:
-- F-score (micro) 0.0659
-- F-score (macro) 0.0106
-- Accuracy 0.0395
-
-By class:
-                             precision    recall  f1-score   support
-
-                    PERSONA     0.0561    1.0000    0.1062         6
-          TIPO_ORGANIZACION     0.0000    0.0000    0.0000         0
-                      FECHA     0.0000    0.0000    0.0000        15
-        DOCUMENTO_IDENTIDAD     0.0000    0.0000    0.0000         4
-   TIPO_DOCUMENTO_IDENTIDAD     0.0000    0.0000    0.0000         2
-  CARGO_REPRESENTANTE_LEGAL     0.0000    0.0000    0.0000         2
-TITULO_ACTIVIDAD_SECUNDARIA     0.0000    0.0000    0.0000         0
-             CARGO_SUPLENTE     0.0000    0.0000    0.0000         1
-                      <unk>     0.0000    0.0000    0.0000         0
-                  ACTIVIDAD     0.0000    0.0000    0.0000         0
-
-                  micro avg     0.0395    0.2000    0.0659        30
-                  macro avg     0.0056    0.1000    0.0106        30
-               weighted avg     0.0112    0.2000    0.0212        30
-
-2022-11-16 18:25:45,187 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,167 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,168 Corpus: "Corpus: 23 train + 3 dev + 3 test sentences"
+2022-11-16 18:27:25,168 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,169 Parameters:
+2022-11-16 18:27:25,170  - learning_rate: "0.000005"
+2022-11-16 18:27:25,170  - mini_batch_size: "1"
+2022-11-16 18:27:25,171  - patience: "3"
+2022-11-16 18:27:25,171  - anneal_factor: "0.5"
+2022-11-16 18:27:25,172  - max_epochs: "1"
+2022-11-16 18:27:25,172  - shuffle: "True"
+2022-11-16 18:27:25,173  - train_with_dev: "False"
+2022-11-16 18:27:25,173  - batch_growth_annealing: "False"
+2022-11-16 18:27:25,174 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,174 Model training base path: "..\..\models\sss"
+2022-11-16 18:27:25,174 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,175 Device: cpu
+2022-11-16 18:27:25,175 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:25,175 Embeddings storage mode: cpu
+2022-11-16 18:27:25,176 ----------------------------------------------------------------------------------------------------
+2022-11-16 18:27:34,184 epoch 1 - iter 2/23 - loss 2.52462641 - samples/sec: 0.22 - lr: 0.000005

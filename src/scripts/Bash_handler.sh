@@ -4,6 +4,10 @@
 if [ $# -gt 0 ]
     then
     MODE="$1"
+    STANDARD="False"
+    FAST="False"
+    CUDA="False"
+    UFLAG="False"
         if [ ${MODE} == 'TRAIN' ]
         then
             shift # past argument
@@ -19,6 +23,12 @@ if [ $# -gt 0 ]
 
                         -m|--model)
                         MODEL="$2"
+                        shift # past argument
+                        shift # past value
+                        ;;
+
+                        -s|--standard)
+                        STANDARD="$2"
                         shift # past argument
                         shift # past value
                         ;;
@@ -43,19 +53,7 @@ if [ $# -gt 0 ]
 
                     esac
                 done
-                    if [ -n "${UFLAG}" ] && [ -n "${CUDA}" ]; then
-                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}" -u "${UFLAG}" -cu "${CUDA}"
-
-                    elif [[ -n "${UFLAG}" ]]; then
-                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}" -u "${UFLAG}" 
-
-                    elif [[ -n "${CUDA}" ]]; then
-                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}" -cu "${CUDA}"
-
-                    else
-                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}"
-                    fi
-
+                    python Train_model.py -f ${FAST} -m ${MODEL} -s ${STANDARD} -id "${INPUTDIR}" -u "${UFLAG}" -cu "${CUDA}"
             else
                 echo Not arguments the script requires at least input directory
             fi
