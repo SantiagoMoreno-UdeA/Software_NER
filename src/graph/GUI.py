@@ -20,8 +20,7 @@ from functions import use_model, tag_sentence, json_to_txt, training_model, char
 models = os.listdir('../../models')
 
 #-------------------------------------------Functions-----------------------------------------------
-def get_models():
-    return os.listdir('../../models')
+
 
 def Trainer(fast, model_name, input_dir, Upsampling, Cuda):
     if fast: epochs = 1
@@ -32,27 +31,31 @@ def Trainer(fast, model_name, input_dir, Upsampling, Cuda):
     else: 
         cuda_info = usage_cuda(False)
     
-    yield cuda_info
+    
     
     Error = json_to_txt(input_dir)
     if type(Error)==int:
-        yield 'Error processing the input documents, code error {}'.format(cuda_info,Error)
+        return 'Error processing the input documents, code error {}'.format(Error)
     if Upsampling:
+        yield cuda_info+'\n'+'-'*20+'Upsampling'+'-'*20
         entities_dict=characterize_data()
         entities = list(entities_dict.keys())
         entities_to_upsample = [entities[i] for i,value in enumerate(entities_dict.values()) if value < 200]
         upsampling_data(entities_to_upsample, 0.8,  entities)
+        yield '-'*20+'Training'+'-'*20
+    else:
+        yield cuda_info+'\n'+'-'*20+'Training'+'-'*20
     Error = training_model(model_name, epochs)
     if type(Error)==int:
-        yield 'Error training the model, code error {}'.format(cuda_info, Error)
+        return 'Error training the model, code error {}'.format(Error)
     else: 
-        yield 'Training complete, model {} could be found at models/{}'.format(cuda_info, model_name,model_name)
+        return 'Training complete, model {} could be found at models/{}'.format(model_name,model_name)
 
 
 def Tagger_sentence(Model, Sentence, Cuda):
     if Cuda: cuda_info = usage_cuda(True)
     else: cuda_info = usage_cuda(False)
-
+    yield cuda_info
     results = tag_sentence(Sentence, Model)
     if type(results)==int:
         return "Error {}, see documentation".format(results)
@@ -60,7 +63,11 @@ def Tagger_sentence(Model, Sentence, Cuda):
         return results['Highligth']
 
 def Tagger_json(Model, Input_file, Output_file, Cuda):
-    results = use_model(Model, Input_file, Output_file, Cuda)
+    if Cuda: cuda_info = usage_cuda(True)
+    else: cuda_info = usage_cuda(False)
+    yield cuda_info
+    
+    results = use_model(Model, Input_file, Output_file)
     if type(results)==int:
         error_dict = {}
         return "Error {}, see documentation".format(results), error_dict
@@ -70,9 +77,13 @@ def Tagger_json(Model, Input_file, Output_file, Cuda):
 
 #---------------------------------GUI-------------------------------------
 if __name__ == '__main__':
-    with gr.Blocks(title='Named Entity Recognition by GITA') as demo:
-        gr.Markdown("Named Entity Recognition(NER) System. Use Tagger to do NER from a pretrained model, or use Trainer to train a new NER model")
-       
+    with gr.Blocks(title='NER', css="#title {font-size: 150% }") as demo:
+        
+        gr.Markdown("Named Entity Recognition(NER) by GITA.",elem_id="title")
+        gr.Markdown("Named Entity Recognition(NER) System.")
+        gr.Markdown("Use Tagger to apply NER from a pretrained model in a sentence or a given document in JSON format.")
+        gr.Markdown("Use Trainer to train a new NER model from a directory of documents in JSON format.")
+        
         with gr.Tab("Tagger"):
             with gr.Tab("Sentence"):
                 with gr.Row():
@@ -88,11 +99,9 @@ if __name__ == '__main__':
            
             with gr.Tab(".JSON"):
                 with gr.Row():
-                    with gr.Column():
-                        b= gr.Radio(list(models), label='Model')
-                        b.change(get_models, outputs=models)
+                    with gr.Column(): 
                         inputs =[
-                             b,
+                             gr.Radio(list(models), label='Model'),
                              gr.File(label='Input data file'),
                              #gr.Textbox(placeholder="Enter path here...", label='Input data file path'), 
                              gr.Textbox(placeholder="Enter path here...", label='Output data file path'), #value='../../data/Tagged/document_tagged.json'),
@@ -104,7 +113,7 @@ if __name__ == '__main__':
                         ]
                 tagger_json = gr.Button("Tag")
                 tagger_json.click(Tagger_json, inputs=inputs, outputs=output)
-       
+                
         
         with gr.Tab("Trainer"):
             with gr.Row():
@@ -123,5 +132,5 @@ if __name__ == '__main__':
         
         trainer.click(Trainer, inputs=train_input, outputs=train_output)
         
-    
+    demo.queue()
     demo.launch(inbrowser=True)
