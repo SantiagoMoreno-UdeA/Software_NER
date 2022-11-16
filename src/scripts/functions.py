@@ -85,13 +85,19 @@ def upsampling_data(entities_to_upsample, probability,  entities):
 
     print('-'*20,'upsampling complete','-'*20)
     
-def training_model(name, cuda):
     
+def usage_cuda(cuda):
     if cuda:
         flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
-        if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
+        if flair.device == torch.device('cpu'): return 'Error handling GPU, CPU will be used'
+        elif flair.device == torch.device('cuda:0'): return 'GPU detected, GPU will be used'
     else:
         flair.device = torch.device('cpu')
+        return 'CPU will be used'
+
+
+def training_model(name, epochs=20):
+    #FUNCION
     
     data_folder  = '../../data/train'
     path_model = '../../models/{}'.format(name)
@@ -158,7 +164,7 @@ def training_model(name, cuda):
                       learning_rate=5.0e-6,
                       mini_batch_size=1,
                       mini_batch_chunk_size=1,
-                      max_epochs=50,
+                      max_epochs=epochs,
                       scheduler=OneCycleLR,
                       embeddings_storage_mode='cpu',
                       optimizer=torch.optim.AdamW,
@@ -171,16 +177,11 @@ def training_model(name, cuda):
     print("Model {} trained and saved in {}".format(name,'models/{}'.format(name)))
     
     
-def tag_sentence(sentence, name, cuda):
+def tag_sentence(sentence, name):
     
     results={'Sentence_tagged':'', 'Highligth':{}}
     Highligth_dict={"text": "", "entities": []}
     
-    if cuda:
-        flair.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
-        if flair.device == torch.device('cpu'): print('Error handling GPU, CPU will be used')
-    else:
-        flair.device = torch.device('cpu')
     
     #--------------Load the trained model-------------------------
     path_model = '../../models/{}'.format(name)
@@ -196,6 +197,7 @@ def tag_sentence(sentence, name, cuda):
             return 0
         
     #------------------Tagged sentence---------------------
+    print('-'*20,'Tagging','-'*20)
     sentence_f = Sentence(sentence)
     tagger.predict(sentence_f)
     sentence_tokenized = []
@@ -220,6 +222,7 @@ def tag_sentence(sentence, name, cuda):
     sen_tagged = ' ' .join(sentence_tokenized)
     results['Highligth'] = Highligth_dict
     results['Sentence_tagged'] = sen_tagged
+    print('-'*20,'Tagged complete','-'*20)
     return results
     
     

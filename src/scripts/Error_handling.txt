@@ -11,3 +11,11 @@
 10 Model does not exists 
 11 Error in output JSON
 
+hacer ejemplos de prueba (Sentence definida, train model, test trained model, test trained good model)
+solucionar error en Tagger CCC_traines
+cuda aparte
+fast option in train
+documentación
+Estandar  no estandar input 
+intentar que models update after train
+docker image linux ligth 

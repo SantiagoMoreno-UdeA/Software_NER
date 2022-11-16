@@ -6,7 +6,7 @@ Created on Tue Oct 25 00:32:02 2022
 """
 import os 
 import argparse
-from functions import use_model, str2bool
+from functions import use_model, str2bool, usage_cuda
 
 default_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(default_path)
@@ -23,6 +23,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     #print(args.model, args.input_data, args.output_data)
+    if args.cuda: cuda_info = usage_cuda(True)
+    else: cuda_info = usage_cuda(False)
+    print(cuda_info)
     Error = use_model(args.model, args.input_data, args.output_data, args.cuda)
     if type(Error)==int:
         print('Tagged not complete, error code {}'.format(Error))

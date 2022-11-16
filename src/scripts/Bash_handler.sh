@@ -11,6 +11,12 @@ if [ $# -gt 0 ]
                 then
                 while [[ $# -gt 1 ]]; do
                     case $1 in
+                        -f|--fast)
+                        FAST="$2"
+                        shift # past argument
+                        shift # past value
+                        ;;
+
                         -m|--model)
                         MODEL="$2"
                         shift # past argument
@@ -38,16 +44,16 @@ if [ $# -gt 0 ]
                     esac
                 done
                     if [ -n "${UFLAG}" ] && [ -n "${CUDA}" ]; then
-                        python Train_model.py -m ${MODEL} -id "${INPUTDIR}" -u "${UFLAG}" -cu "${CUDA}"
+                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}" -u "${UFLAG}" -cu "${CUDA}"
 
                     elif [[ -n "${UFLAG}" ]]; then
-                        python Train_model.py -m ${MODEL} -id "${INPUTDIR}" -u "${UFLAG}" 
+                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}" -u "${UFLAG}" 
 
                     elif [[ -n "${CUDA}" ]]; then
-                        python Train_model.py -m ${MODEL} -id "${INPUTDIR}" -cu "${CUDA}"
+                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}" -cu "${CUDA}"
 
                     else
-                        python Train_model.py -m ${MODEL} -id "${INPUTDIR}"
+                        python Train_model.py -f ${FAST} -m ${MODEL} -id "${INPUTDIR}"
                     fi
 
             else
