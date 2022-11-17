@@ -37,7 +37,7 @@ def Trainer(fast, model_name, standard, input_dir, Upsampling, Cuda):
     else:
         Error = json_to_txt(input_dir)
         if type(Error)==int:
-            return 'Error processing the input documents, code error {}'.format(Error)
+            yield 'Error processing the input documents, code error {}'.format(Error)
     if Upsampling:
         yield cuda_info+'\n'+'-'*20+'Upsampling'+'-'*20
         entities_dict=characterize_data()
@@ -49,32 +49,33 @@ def Trainer(fast, model_name, standard, input_dir, Upsampling, Cuda):
         yield cuda_info+'\n'+'-'*20+'Training'+'-'*20
     Error = training_model(model_name, epochs)
     if type(Error)==int:
-        return 'Error training the model, code error {}'.format(Error)
+        yield 'Error training the model, code error {}'.format(Error)
     else: 
-        return 'Training complete, model {} could be found at models/{}'.format(model_name,model_name)
+        yield 'Training complete, model {} could be found at models/{}'.format(model_name,model_name)
 
 
 def Tagger_sentence(Model, Sentence, Cuda):
     if Cuda: cuda_info = usage_cuda(True)
     else: cuda_info = usage_cuda(False)
-    yield cuda_info
+    yield cuda_info+'\n'+'-'*20+'Tagging'+'-'*20
     results = tag_sentence(Sentence, Model)
     if type(results)==int:
-        return "Error {}, see documentation".format(results)
+        yield "Error {}, see documentation".format(results)
     else:
-        return results['Highligth']
+        yield results['Highligth']
 
 def Tagger_json(Model, Input_file, Output_file, Cuda):
     if Cuda: cuda_info = usage_cuda(True)
     else: cuda_info = usage_cuda(False)
-    yield cuda_info
     
-    results = use_model(Model, Input_file, Output_file)
+    yield cuda_info+'\n'+'-'*20+'Tagging'+'-'*20, {}
+    
+    results = use_model(Model, Input_file.name, Output_file)
     if type(results)==int:
         error_dict = {}
-        return "Error {}, see documentation".format(results), error_dict
+        yield "Error {}, see documentation".format(results), error_dict
     else:
-        return { "text" : results['text'], 'entities': results['entities']}, results
+        yield { "text" : results['text'], 'entities': results['entities']}, results
 
 
 #---------------------------------GUI-------------------------------------
@@ -96,14 +97,20 @@ if __name__ == '__main__':
                              gr.Radio([True,False], label='CUDA', value=False),
                         ]
                     output = gr.HighlightedText()
+                
+           
                 tagger_sen = gr.Button("Tag")
                 tagger_sen.click(Tagger_sentence, inputs=inputs, outputs=output)
                 b.change(fn=lambda value: gr.update(choices=list(os.listdir('../../models'))), inputs=b, outputs=b)
-                # gr.Examples=[
-                #     "",
-                #     inputs=inputs,
-                #     ]
-           
+                gr.Examples(
+                
+                    examples=[
+                        ['CCC',"Camara de comercio de medellín. El ciudadano JAIME VELEZ identificado con C.C. 12546987 ingresó al plantel el día 1/01/2022"],
+                        ['CCC',"razón social Expendio de bebidas dulces, Actividad economica fabricación y distribución de bebidas endulzadas"]
+                     ],
+                    inputs=inputs
+                    )
+                
             with gr.Tab(".JSON"):
                 with gr.Row():
                     with gr.Column(): 
@@ -142,6 +149,7 @@ if __name__ == '__main__':
         
         trainer.click(Trainer, inputs=train_input, outputs=train_output)
         
+
         
-    demo.queue()
-    demo.launch(inbrowser=True)
+demo.queue()
+demo.launch(inbrowser=True)
