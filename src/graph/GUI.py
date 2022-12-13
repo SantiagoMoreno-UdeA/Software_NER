@@ -80,9 +80,10 @@ def Tagger_json(Model, Input_file, Output_file, Cuda):
 
 #---------------------------------GUI-------------------------------------
 if __name__ == '__main__':
-    with gr.Blocks(title='NER', css="#title {font-size: 150% }") as demo:
+    with gr.Blocks(title='NER', css="#title {font-size: 150% } #sub {font-size: 120% } ") as demo:
         
-        gr.Markdown("Named Entity Recognition(NER) by GITA.",elem_id="title")
+        gr.Markdown("Named Entity Recognition(NER) by GITA and PRATECH.",elem_id="title")
+        gr.Markdown("Software developed by Santiago Moreno, Daniel Escobar, Rafael Orozco",elem_id="sub")
         gr.Markdown("Named Entity Recognition(NER) System.")
         gr.Markdown("Use Tagger to apply NER from a pretrained model in a sentence or a given document in JSON format.")
         gr.Markdown("Use Trainer to train a new NER model from a directory of documents in JSON format.")
@@ -96,41 +97,43 @@ if __name__ == '__main__':
                              gr.Textbox(placeholder="Enter sentence here...", label='Sentence'), 
                              gr.Radio([True,False], label='CUDA', value=False),
                         ]
+                        tagger_sen = gr.Button("Tag")
                     output = gr.HighlightedText()
                 
            
-                tagger_sen = gr.Button("Tag")
+                
                 tagger_sen.click(Tagger_sentence, inputs=inputs, outputs=output)
                 b.change(fn=lambda value: gr.update(choices=list(os.listdir('../../models'))), inputs=b, outputs=b)
                 gr.Examples(
                 
                     examples=[
-                        ['CCC',"Camara de comercio de medellín. El ciudadano JAIME VELEZ identificado con C.C. 12546987 ingresó al plantel el día 1/01/2022"],
-                        ['CCC',"razón social Expendio de bebidas dulces, Actividad economica fabricación y distribución de bebidas endulzadas"]
+                        ['CCC',"Camara de comercio de medellín. El ciudadano JAIME JARAMILLO VELEZ identificado con C.C. 12546987 ingresó al plantel el día 1/01/2022"],
+                        ['CCC',"Razón Social GASEOSAS GLACIAR S.A.S, ACTIVIDAD PRINCIPAL fabricación y distribución de bebidas endulzadas"]
                      ],
                     inputs=inputs
                     )
-                
-            with gr.Tab(".JSON"):
+      
+               
+            with gr.Tab("Document"):
                 with gr.Row():
                     with gr.Column(): 
                         c = gr.Radio(list(models), label='Model')
                         inputs =[
                              c,
                              gr.File(label='Input data file'),
-                             #gr.Textbox(placeholder="Enter path here...", label='Input data file path'), 
                              gr.Textbox(placeholder="Enter path here...", label='Output data file path'), #value='../../data/Tagged/document_tagged.json'),
                              gr.Radio([True,False], label='CUDA', value=False),
                         ]
+                        tagger_json = gr.Button("Tag")
                     output = [
                         gr.HighlightedText(),
                         gr.JSON(),
                         ]
-                tagger_json = gr.Button("Tag")
+                
                 tagger_json.click(Tagger_json, inputs=inputs, outputs=output)
                 c.change(fn=lambda value: gr.update(choices=list(os.listdir('../../models'))), inputs=c, outputs=c)
                 
-        
+         
         with gr.Tab("Trainer"):
             with gr.Row():
                 with gr.Column():
@@ -142,8 +145,9 @@ if __name__ == '__main__':
                          gr.Radio([True,False], label='Upsampling', value=False),
                          gr.Radio([True,False], label='CUDA', value=False),
                     ]
+                    trainer = gr.Button("Train")
                 train_output = gr.TextArea(placeholder="Output information", label='Output')
-            trainer = gr.Button("Train")
+            
     
     
         
@@ -152,4 +156,4 @@ if __name__ == '__main__':
 
         
 demo.queue()
-demo.launch(inbrowser=True)
+demo.launch(share=True)

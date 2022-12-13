@@ -26,7 +26,7 @@ if __name__ == '__main__':
     if args.cuda: cuda_info = usage_cuda(True)
     else: cuda_info = usage_cuda(False)
     print(cuda_info)
-    Error = use_model(args.model, args.input_data, args.output_data, args.cuda)
+    Error = use_model(args.model, args.input_data, args.output_data)
     if type(Error)==int:
         print('Tagged not complete, error code {}'.format(Error))
     else:

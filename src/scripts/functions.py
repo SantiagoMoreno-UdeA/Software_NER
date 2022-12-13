@@ -139,7 +139,7 @@ def training_model(name, epochs=20):
                     use_context=True,
                 )
     except: 
-        print('Error while loading embeddings form RoBERTa')
+        print('Error while loading embeddings from RoBERTa')
         return 5
 
     # 5. initialize bare-bones sequence tagger (no CRF, no RNN, no reprojection)
@@ -176,7 +176,7 @@ def training_model(name, epochs=20):
                       )
     except: 
         pass
-        print('Error training the model, try whithout setting CUDA False')
+        print('Error training the model, try setting CUDA False')
         return 7
     
     print("Model {} trained and saved in {}".format(name,'models/{}'.format(name)))
@@ -199,7 +199,7 @@ def tag_sentence(sentence, name):
             tagger = SequenceTagger.load(path_model+'/final-model.pt')
         except: 
             print('Invalid model')
-            return 0
+            return 1
         
     #------------------Tagged sentence---------------------
     print('-'*20,'Tagging','-'*20)
@@ -241,7 +241,7 @@ def use_model(name, path_data, output_dir):
         return 10
         
     if not os.path.isfile(path_data): 
-        print('Input file is not a directory')
+        print('Input file is not a file')
         return 9 
     
     try:
@@ -251,7 +251,7 @@ def use_model(name, path_data, output_dir):
             tagger = SequenceTagger.load(path_model+'/final-model.pt')
         except: 
             print('Invalid model')
-            return 0
+            return 1
     
     #-----------------Load the document-------------------------
     try:
@@ -302,8 +302,8 @@ def use_model(name, path_data, output_dir):
                     
                     }
                 results["entities"].append(token_info)
-        indx_prev = len(sentence.tokens)
-        pos_prev = len(sentence.to_plain_string())
+        indx_prev += len(sentence.tokens)
+        pos_prev += len(sentence.to_plain_string())
         sen_tagged = ' ' .join(sentence_tokenized)
         sen_dict_temp['text_labeled'] = sen_tagged
         results['sentences'].append(sen_dict_temp)
@@ -317,6 +317,7 @@ def use_model(name, path_data, output_dir):
             json.dump(results, write_file)
     
         print('-'*20,'Tagged complete','-'*20)
+        print('Document tagged saved in {}'.format(output_dir))
     except:
         print('Error in output file')
         return 11
