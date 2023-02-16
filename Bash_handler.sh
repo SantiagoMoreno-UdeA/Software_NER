@@ -53,7 +53,7 @@ if [ $# -gt 0 ]
 
                     esac
                 done
-                    python Train_model.py -f ${FAST} -m ${MODEL} -s ${STANDARD} -id "${INPUTDIR}" -u "${UFLAG}" -cu "${CUDA}"
+                    python src/scripts/Train_model.py -f ${FAST} -m ${MODEL} -s ${STANDARD} -id "${INPUTDIR}" -u "${UFLAG}" -cu "${CUDA}"
             else
                 echo Not arguments the script requires at least input directory
             fi
@@ -94,16 +94,16 @@ if [ $# -gt 0 ]
 
             done
             if [ -n "${OUTPUTDIR}" ] && [ -n "${CUDA}" ]; then
-                python Tagged_document.py -m ${MODEL} -id "${INPUTDIR}" -od "${OUTPUTDIR}" -cu "${CUDA}"
+                python src/scripts/Tagged_document.py -m ${MODEL} -id "${INPUTDIR}" -od "${OUTPUTDIR}" -cu "${CUDA}"
 
             elif [[ -n "${OUTPUTDIR}" ]]; then
-                python Tagged_document.py -m ${MODEL} -id "${INPUTDIR}" -od "${OUTPUTDIR}" 
+                python src/scripts/Tagged_document.py -m ${MODEL} -id "${INPUTDIR}" -od "${OUTPUTDIR}" 
 
             elif [[ -n "${CUDA}" ]]; then
-                python Tagged_document.py -m ${MODEL} -id "${INPUTDIR}" -cu "${CUDA}"
+                python src/scripts/Tagged_document.py -m ${MODEL} -id "${INPUTDIR}" -cu "${CUDA}"
 
             else
-                python Tagged_document.py -m ${MODEL} -id "${INPUTDIR}"
+                python src/scripts/Tagged_document.py -m ${MODEL} -id "${INPUTDIR}"
             fi
         
 

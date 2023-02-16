@@ -2,6 +2,7 @@ FROM ubuntu:18.04
 RUN apt-get update 
 RUN apt-get upgrade -y
 RUN apt install -y software-properties-common
+RUN apt-get install --reinstall ca-certificates
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get install -y python3.9
 RUN apt install -y python3.9-distutils

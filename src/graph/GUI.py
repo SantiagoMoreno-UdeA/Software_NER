@@ -12,12 +12,12 @@ import sys
 
 default_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(default_path)
-sys.path.insert(0, '../scripts')
+sys.path.insert(0, default_path+'/../scripts')
 
-from functions import use_model, tag_sentence, json_to_txt, training_model, characterize_data, upsampling_data, usage_cuda, copy_data
+from src.scripts.functions import use_model, tag_sentence, json_to_txt, training_model, characterize_data, upsampling_data, usage_cuda, copy_data
 
 
-models = os.listdir('../../models')
+models = os.listdir(default_path+'/../../models')
 
 #-------------------------------------------Functions-----------------------------------------------
 
@@ -79,7 +79,7 @@ def Tagger_json(Model, Input_file, Output_file, Cuda):
 
 
 #---------------------------------GUI-------------------------------------
-if __name__ == '__main__':
+def execute_GUI():
     with gr.Blocks(title='NER', css="#title {font-size: 150% } #sub {font-size: 120% } ") as demo:
         
         gr.Markdown("Named Entity Recognition(NER) by GITA and PRATECH.",elem_id="title")
@@ -155,5 +155,7 @@ if __name__ == '__main__':
         
 
         
-demo.queue()
-demo.launch(share=True)
+    demo.queue()
+    demo.launch(server_name="0.0.0.0", server_port=8080,inbrowser=True)
+
+

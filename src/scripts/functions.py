@@ -22,7 +22,7 @@ import os
 import operator
 import flair
 import argparse
-
+default_path = os.path.dirname(os.path.abspath(__file__))
 def check_create(path):
     import os
     
@@ -41,11 +41,11 @@ def str2bool(v):
         
 
 def copy_data(original_path):
-    data_folder  = '../../data/train'
+    data_folder  = default_path + '/../../data/train'
     copy_tree(original_path, data_folder)
     
 def characterize_data():
-    data_folder  = '../../data/train'
+    data_folder  = default_path + '/../../data/train'
     columns = {0: 'text', 1:'ner'}
     
     # init a corpus using column format, data folder and the names of the train, dev and test files
@@ -70,7 +70,7 @@ def characterize_data():
 
 def upsampling_data(entities_to_upsample, probability,  entities):
     print('-'*20,'upsampling','-'*20)
-    data_folder  = '../../data/train'
+    data_folder  = default_path + '/../../data/train'
     columns = {'text':0, 'ner':1}
     for m in ["SiS","LwTR","MR","SR", "MBT"]:
         upsampler = upsampling_ner(data_folder+'/train.txt', entities+['O'], columns)
@@ -104,8 +104,8 @@ def usage_cuda(cuda):
 def training_model(name, epochs=20):
     #FUNCION
     
-    data_folder  = '../../data/train'
-    path_model = '../../models/{}'.format(name)
+    data_folder  = default_path + '/../../data/train'
+    path_model = default_path + '/../../models/{}'.format(name)
     if (os.path.isdir(path_model)): print('WARNING, model already exists will be overwritten')
     columns = {0: 'text', 1:'ner'}
     # init a corpus using column format, data folder and the names of the train, dev and test files
@@ -189,7 +189,7 @@ def tag_sentence(sentence, name):
     
     
     #--------------Load the trained model-------------------------
-    path_model = '../../models/{}'.format(name)
+    path_model = default_path + '/../../models/{}'.format(name)
     
     
     try:
@@ -234,7 +234,7 @@ def tag_sentence(sentence, name):
 def use_model(name, path_data, output_dir):
     
     #--------------Load the trained model-------------------------
-    path_model = '../../models/{}'.format(name)
+    path_model = default_path + '/../../models/{}'.format(name)
     
     if not (os.path.isdir(path_model)): 
         print('Model does not exists')
@@ -418,10 +418,10 @@ def json_to_txt(path_data_documents):
         id_in=groups_temp[0]
         
             
-        data_folder  = '../../data/train'
+        data_folder  = default_path + '/../../data/train'
         check_create(data_folder)
         count = 0
-        with open('../../data/train/{}.txt'.format(arch), mode='w', encoding='utf-8') as f:
+        with open(data_folder + '/{}.txt'.format(arch), mode='w', encoding='utf-8') as f:
             for i in range(len(X_temp)):
                 if groups_temp[i] != id_in:
                     id_in=groups_temp[i]
