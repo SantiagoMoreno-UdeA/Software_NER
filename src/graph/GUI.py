@@ -8,7 +8,7 @@ Created on Fri Nov 11 16:01:08 2022
 import os 
 import gradio as gr
 import sys
-
+import json
 
 default_path = os.path.dirname(os.path.abspath(__file__))
 os.chdir(default_path)
@@ -68,14 +68,16 @@ def Tagger_json(Model, Input_file, Output_file, Cuda):
     if Cuda: cuda_info = usage_cuda(True)
     else: cuda_info = usage_cuda(False)
     
-    yield cuda_info+'\n'+'-'*20+'Tagging'+'-'*20, {}
+    with open(Output_file, "w", encoding='utf-8') as write_file:
+        json.dump({'error':'error'}, write_file)
+        
+    yield cuda_info+'\n'+'-'*20+'Tagging'+'-'*20, Output_file
     
     results = use_model(Model, Input_file.name, Output_file)
     if type(results)==int:
-        error_dict = {}
-        yield "Error {}, see documentation".format(results), error_dict
+        yield "Error {}, see documentation".format(results), Output_file
     else:
-        yield { "text" : results['text'], 'entities': results['entities']}, results
+        yield { "text" : results['text'], 'entities': results['entities']}, Output_file
 
 
 #---------------------------------GUI-------------------------------------
@@ -127,7 +129,8 @@ def execute_GUI():
                         tagger_json = gr.Button("Tag")
                     output = [
                         gr.HighlightedText(),
-                        gr.JSON(),
+                        #gr.JSON(),
+                        gr.File(),
                         ]
                 
                 tagger_json.click(Tagger_json, inputs=inputs, outputs=output)
