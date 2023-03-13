@@ -16,3 +16,4 @@ WORKDIR /workspace
 ADD . /workspace/
 ENV HOME=/workspace
 RUN pip install -r requirements.txt
+CMD ["python", "execute_GUI.py"]

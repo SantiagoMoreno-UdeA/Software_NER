@@ -22,7 +22,10 @@ import os
 import operator
 import flair
 import argparse
+
 default_path = os.path.dirname(os.path.abspath(__file__))
+tagger_document = 0
+tagger_sentence = 0
 def check_create(path):
     import os
     
@@ -145,7 +148,7 @@ def training_model(name, epochs=20):
     # 5. initialize bare-bones sequence tagger (no CRF, no RNN, no reprojection)
     
     try:
-        tagger = SequenceTagger(
+        tagger_train = SequenceTagger(
             hidden_size=256,
             embeddings=embeddings,
             tag_dictionary=tag_dictionary,
@@ -161,7 +164,7 @@ def training_model(name, epochs=20):
     # 6. initialize trainer with AdamW optimizer
     
 
-    trainer = ModelTrainer(tagger, corpus)
+    trainer = ModelTrainer(tagger_train, corpus)
 
     # 7. run training with XLM parameters (20 epochs, small LR)
     try:
@@ -190,21 +193,23 @@ def tag_sentence(sentence, name):
     
     #--------------Load the trained model-------------------------
     path_model = default_path + '/../../models/{}'.format(name)
+    global tagger_sentence
     
-    
-    try:
-        tagger = SequenceTagger.load(path_model+'/best-model.pt')
-    except:
+    if (not tagger_sentence):
+        
         try:
-            tagger = SequenceTagger.load(path_model+'/final-model.pt')
-        except: 
-            print('Invalid model')
-            return 1
+            tagger_sentence = SequenceTagger.load(path_model+'/best-model.pt')
+        except:
+            try:
+                tagger_sentence = SequenceTagger.load(path_model+'/final-model.pt')
+            except: 
+                print('Invalid model')
+                return 1
         
     #------------------Tagged sentence---------------------
     print('-'*20,'Tagging','-'*20)
     sentence_f = Sentence(sentence)
-    tagger.predict(sentence_f)
+    tagger_sentence.predict(sentence_f)
     sentence_tokenized = []
     Highligth_dict['text'] = sentence_f.to_plain_string()
     
@@ -244,14 +249,18 @@ def use_model(name, path_data, output_dir):
         print('Input file is not a file')
         return 9 
     
-    try:
-        tagger = SequenceTagger.load(path_model+'/best-model.pt')
-    except:
+    global tagger_document
+    
+    if (not tagger_document):
+        
         try:
-            tagger = SequenceTagger.load(path_model+'/final-model.pt')
-        except: 
-            print('Invalid model')
-            return 1
+            tagger_document = SequenceTagger.load(path_model+'/best-model.pt')
+        except:
+            try:
+                tagger_document = SequenceTagger.load(path_model+'/final-model.pt')
+            except: 
+                print('Invalid model')
+                return 1
     
     #-----------------Load the document-------------------------
     try:
@@ -280,7 +289,7 @@ def use_model(name, path_data, output_dir):
     pos_prev = 0
     for s in sentences:
         sentence = Sentence(s['text'])
-        tagger.predict(sentence)
+        tagger_document.predict(sentence, mini_batch_size = 1)
         sen_dict_temp = {'text':sentence.to_plain_string(), 'text_labeled':'', 'tokens':[]}
         #return sentence
         sentence_tokenized = []
@@ -438,5 +447,21 @@ def json_to_txt(path_data_documents):
 
             
 
+    # print("Before check")
+    # checkpoint = "xlm-roberta-large"
+    # config = AutoConfig.from_pretrained(checkpoint)
+    
+    # with init_empty_weights():
+    #     model = AutoModelForSequenceClassification.from_config(config)
+        
+    # print("After check")    
+    # try:
+    #     tagger = load_checkpoint_and_dispatch(model, path_model+'/best-model.pt', device_map="auto")
+    # except:
+    #     try:
+    #         tagger = load_checkpoint_and_dispatch(model, path_model+'/final-model.pt', device_map="auto")
+    #     except: 
+    #         print('Invalid model')
+    #         return 1
                         
 
